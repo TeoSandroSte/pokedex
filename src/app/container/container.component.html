@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="navigation">
+        <div class="topContainerLeft">
+            <button class="previous" routerLink="pokedex"
+                [ngClass]="router.url == '/pokedex' ? 'active' : 'inactive'">Pokedex</button>
+            <div class="before"
+                [ngStyle]="{'border-left': (router.url === '/pokedex') ? '48px solid rgb(227, 53, 13)' : '48px solid white'}">
+            </div>
+        </div>
+
+        <div class="buttonSeparator"></div>
+
+        <div class="topContainerRight">
+            <button class="next" routerLink="sightings"
+                [ngClass]="router.url == '/sightings' ? 'active' : 'inactive'">Avvistamenti</button>
+            <div class="after"
+                [ngStyle]="{'border-right': (router.url === '/sightings') ? '48px solid rgb(227, 53, 13)' : '48px solid white'}">
+            </div>
+        </div>
+    </div>
+
+    <div class="routerContainer">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="bottom">
+        <div class="leftTriangle"></div>
+        <div class="rightTriangle"></div>
+    </div>
+</div>

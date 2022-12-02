@@ -1,0 +1,51 @@
+<div
+    style="display: flex; flex-direction: column; overflow-y: hidden; height: 100%; width: 100%; background-color: #eaeaea;">
+    <div class="searchContainer">
+        <button *ngIf="pokemonInputName.value !== '' && pokemonInputName.value !== null" class="searchButton"
+            type="button" (click)="resetSearch()">
+            X
+        </button>
+
+        <input class="searchInput" id="pokemonInputName" type="text" [formControl]="pokemonInputName"
+            placeholder="Search for a Pokemon..." (input)="submitPokemonName(pokemonInputName.value)">
+    </div>
+
+
+    <div class="pokemons">
+        <ng-container *ngIf="pokemonList !== []">
+            <div *ngFor="let pokemon of pokemonList" class="pokemonContainer" (click)="avvistamento()">
+                <div class="pokemonGenericInfo">
+                    <div class="pokemonId">#{{pokemon.id}}</div>
+
+                    <div class="pokemonName">
+                        {{capitalizePokemonName(pokemon.name)}}
+                    </div>
+
+                    <div class="dimensionsContainer">
+                        <div class="dimension">Height: {{pokemon.height}}</div>
+                        <div class="dimension">Weight: {{pokemon.weight}}</div>
+                    </div>
+
+                    <div class="typeContainer">
+                        <div *ngFor="let types of pokemon.types" class="type" [ngClass]="types.type.name"
+                            [ngStyle]="{'width': pokemon.types.length == 1 ? '100%' : '43%'}">
+                            {{types.type.name.toUpperCase()}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pokemonImageContainer">
+                    <img id="pokemonImageUrl" class="pokemonImage"
+                        [src]="pokemon.sprites.other['official-artwork'].front_default" [alt]="pokemon.name"
+                        onError="this.src='../../assets/images/wtp.png'">
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="modal">
+        <div class="modal-body">
+            <ng-template #content></ng-template>
+        </div>
+    </div>
+</div>
