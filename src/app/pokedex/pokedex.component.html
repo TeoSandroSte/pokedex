@@ -13,7 +13,7 @@
 
     <div class="pokemons">
         <ng-container *ngIf="pokemonList !== []">
-            <div *ngFor="let pokemon of pokemonList" class="pokemonContainer" (click)="avvistamento()">
+            <div *ngFor="let pokemon of pokemonList" class="pokemonContainer">
                 <div class="pokemonGenericInfo">
                     <div class="pokemonId">#{{pokemon.id}}</div>
 
@@ -41,11 +41,5 @@
                 </div>
             </div>
         </ng-container>
-    </div>
-
-    <div class="modal">
-        <div class="modal-body">
-            <ng-template #content></ng-template>
-        </div>
     </div>
 </div>

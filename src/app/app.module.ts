@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { SightingsComponent } from './sightings/sightings.component';
 import { ContainerComponent } from './container/container.component';
-import { ItemListComponent } from './item-list/item-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { ItemListComponent } from './item-list/item-list.component';
     PokedexComponent,
     SightingsComponent,
     ContainerComponent,
-    ItemListComponent,
   ],
   imports: [
     BrowserModule,

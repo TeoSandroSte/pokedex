@@ -1,1 +1,18 @@
-<p>sightings works!</p>
+<div class="container">
+    <select name="cars" id="cars" [(ngModel)]="pokemonSelected">
+        <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
+    </select>
+    {{pokemonSelected}}
+
+    <input type="file" id="pokemonPic" name="pokemonPic" accept="image/*" (change)="fileChangeEvent()">
+
+    <input type="text" name="note" id="note" [formControl]="note">
+
+    <button (click)="submit()" [disabled]="checkAll()">Submit</button>
+
+    <div *ngFor="let pokemonList of pokemonList$ | async">
+        {{pokemonList | json}}
+    </div>
+
+    <button (click)="resetDatabase()">reset</button>
+</div>

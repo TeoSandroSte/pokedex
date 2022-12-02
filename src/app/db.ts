@@ -8,8 +8,8 @@ export interface Pokemons {
 
 export interface Appearance {
     image?: any,
-    place?: string,
-    date: string,
+    place?: any,
+    date?: string,
     note: string
 }
 

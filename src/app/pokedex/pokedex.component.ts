@@ -37,7 +37,14 @@ export class PokedexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getElementInfo(this.initialUrl);
+    console.log('api: ', this.pokemonApi.pokemonList);
+    if (JSON.stringify(this.pokemonApi.pokemonList) == '[]') {
+      this.getElementInfo(this.initialUrl);
+    }
+    else {
+      this.pokemonList = this.pokemonApi.pokemonList;
+      this.pokemonListCopy = this.pokemonList;
+    }
   }
 
   getElementInfo(url: string) {
@@ -58,6 +65,7 @@ export class PokedexComponent implements OnInit {
       if (data.results !== undefined && data.results !== null) {
         this.pokemonRawData = data.results;
         this.pokemonList = [];
+        this.pokemonListCopy = [];
         this.findAndWaitForAllPokemons(data.results);
       }
     }
@@ -76,6 +84,7 @@ export class PokedexComponent implements OnInit {
 
     return forkJoin(requests)
       .subscribe((response) => {
+        this.pokemonApi.pokemonList = response;
         this.pokemonList = response;
         this.pokemonListCopy = this.pokemonList;
       })
@@ -101,11 +110,5 @@ export class PokedexComponent implements OnInit {
   capitalizePokemonName(pokemonName: string) {
     return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   }
-
-
-  avvistamento() {
-
-  }
-
 
 }
