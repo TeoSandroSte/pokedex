@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { liveQuery } from 'dexie';
-import { forkJoin, map } from 'rxjs';
+import { forkJoin, map, Subscription } from 'rxjs';
 import { db } from '../db';
 import { Pokemon } from '../pokedex/pokedex.component';
 import { PokemonApiService } from '../pokemon-api.service';
@@ -14,10 +14,8 @@ import { PokemonApiService } from '../pokemon-api.service';
 })
 export class SightingsComponent implements OnInit {
 
-  initialUrl: string = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
-  pokemonList: Array<Pokemon> = [];
-  pokemonListCopy: Array<Pokemon> = [];
-  pokemonSimpleData = [];
+  subscription!: Subscription;
+  pokemonList!: any;
   pokemonSelected!: Pokemon;
   imgBase64: any;
   note = new FormControl('');
@@ -30,60 +28,12 @@ export class SightingsComponent implements OnInit {
   constructor(
     private pokemonApi: PokemonApiService,
     private http: HttpClient,
-  ) { }
+  ) {
+    this.subscription = pokemonApi.pokemonList$.subscribe(data => this.pokemonList = data)
+  }
 
   ngOnInit() {
     this.getLocation();
-    console.log('api: ', this.pokemonApi.pokemonList);
-    if (JSON.stringify(this.pokemonApi.pokemonList) == '[]') {
-      this.getElementInfo(this.initialUrl);
-    }
-    else {
-      this.pokemonList = this.pokemonApi.pokemonList;
-      this.pokemonListCopy = this.pokemonList;
-    }
-  }
-
-  getElementInfo(url: string) {
-    this.pokemonApi.getElementInformation(url)
-      .pipe(
-        map(i => i)
-      )
-      .subscribe(data => {
-        if (data !== undefined && data !== null) {
-          console.log('data: ', data)
-          this.separateElementData(data)
-        }
-      });
-  }
-
-  separateElementData(data: any) {
-    if (data !== undefined) {
-      if (data.results !== undefined && data.results !== null) {
-        this.pokemonList = [];
-        this.pokemonListCopy = [];
-        this.findAndWaitForAllPokemons(data.results);
-      }
-    }
-    else {
-      console.log('data è undefined');
-    }
-  }
-
-  findAndWaitForAllPokemons(results: any) {
-    const requests = [];
-
-    for (let i = 0; i < results.length; i++) {
-      const element = results[i];
-      requests.push(this.pokemonApi.getElementInformation(element.url))
-    }
-
-    return forkJoin(requests)
-      .subscribe((response) => {
-        this.pokemonApi.pokemonList = response;
-        this.pokemonList = response;
-        this.pokemonListCopy = this.pokemonList;
-      })
   }
 
   fileChangeEvent() {

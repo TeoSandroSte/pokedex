@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin, map } from 'rxjs';
 import { PokemonApiService } from '../pokemon-api.service';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'dexie';
 
 export interface Pokemon {
   name: string,
@@ -25,73 +26,19 @@ export interface Pokemon {
 })
 export class PokedexComponent implements OnInit {
 
-  initialUrl: string = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
-  pokemonRawData: Array<any> = [];
-  pokemonList: Array<Pokemon> = [];
+  subscription!: Subscription;
+  pokemonList!: any;
   pokemonListCopy: Array<Pokemon> = [];
-  nextResults!: string;
   pokemonInputName = new FormControl('');
 
   constructor(
     private pokemonApi: PokemonApiService,
-  ) { }
+  ) {
+    this.subscription = pokemonApi.pokemonList$.subscribe(data => this.pokemonList = data)
+  }
 
   ngOnInit() {
-    console.log('api: ', this.pokemonApi.pokemonList);
-    if (JSON.stringify(this.pokemonApi.pokemonList) == '[]') {
-      this.getElementInfo(this.initialUrl);
-    }
-    else {
-      this.pokemonList = this.pokemonApi.pokemonList;
-      this.pokemonListCopy = this.pokemonList;
-    }
   }
-
-  getElementInfo(url: string) {
-    this.pokemonApi.getElementInformation(url)
-      .pipe(
-        map(i => i)
-      )
-      .subscribe(data => {
-        if (data !== undefined && data !== null) {
-          console.log('data: ', data)
-          this.separateElementData(data)
-        }
-      });
-  }
-
-  separateElementData(data: any) {
-    if (data !== undefined) {
-      if (data.results !== undefined && data.results !== null) {
-        this.pokemonRawData = data.results;
-        this.pokemonList = [];
-        this.pokemonListCopy = [];
-        this.findAndWaitForAllPokemons(data.results);
-      }
-    }
-    else {
-      console.log('data è undefined');
-    }
-  }
-
-  findAndWaitForAllPokemons(results: any) {
-    const requests = [];
-
-    for (let i = 0; i < results.length; i++) {
-      const element = results[i];
-      requests.push(this.pokemonApi.getElementInformation(element.url))
-    }
-
-    return forkJoin(requests)
-      .subscribe((response) => {
-        this.pokemonApi.pokemonList = response;
-        this.pokemonList = response;
-        this.pokemonListCopy = this.pokemonList;
-      })
-  }
-
-
-
 
   submitPokemonName(pokemonInputName: any) {
     pokemonInputName = pokemonInputName.trim().split(' ').join('').toLowerCase()
@@ -103,9 +50,6 @@ export class PokedexComponent implements OnInit {
     this.pokemonInputName.reset();
     this.pokemonList = this.pokemonListCopy;
   }
-
-
-
 
   capitalizePokemonName(pokemonName: string) {
     return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
