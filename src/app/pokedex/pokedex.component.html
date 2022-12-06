@@ -10,8 +10,8 @@
     </div>
 
     <!-- VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
-    (scroll)="onScroll($event)" -->
-    <div class="pokemons">
+     -->
+    <div class="pokemons" (scroll)="scroll == true ? onScroll($event) : ''">
         <ng-container *ngIf="pokemonList !== []">
             <div *ngFor="let pokemon of pokemonList" class="pokemonContainer">
                 <div class="pokemonGenericInfo">

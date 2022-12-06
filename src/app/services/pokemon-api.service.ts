@@ -9,21 +9,31 @@ import { Pokemon } from '../pokedex/pokedex.component';
 export class PokemonApiService {
 
   pokemonList$ = new BehaviorSubject<Array<Pokemon>>([]);
-  allPokemonList$ = new BehaviorSubject<Array<Pokemon>>([]);
   pokemonList: Array<Pokemon> = [];
+  rawPokemonList$ = new BehaviorSubject<Array<any>>([]);
   initialUrl: string = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
-  elements = 100000;
+  elements = 20;
   offset = 0;
 
   constructor(
     private http: HttpClient
   ) { }
 
+  getAllrawPokemon() {
+    this.http.get<any>(this.initialUrl).pipe(
+      map(i => i)
+    )
+      .subscribe(data => {
+        this.rawPokemonList$.next(data.results)
+        console.log('raw data: ', data)
+      })
+  }
+
   getElementInformation(increase: number) {
     // VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
-    // this.offset = this.offset + increase;
-    // this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?limit=${this.elements}&offset=${this.offset}`).pipe(
-    this.http.get<any>(this.initialUrl).pipe(
+    this.offset = this.offset + increase;
+    this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?limit=${this.elements}&offset=${this.offset}`).pipe(
+      // this.http.get<any>(this.initialUrl).pipe(
       map(i => i)
     )
       .subscribe(data => {
@@ -55,6 +65,10 @@ export class PokemonApiService {
       })
     }
     this.pokemonList$.next(this.pokemonList);
+  }
+
+  getSpecificPokemon(url: string) {
+    return this.http.get<any>(url)
   }
 
 }

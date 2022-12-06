@@ -26,11 +26,13 @@ export interface Pokemon {
 export class PokedexComponent implements OnInit {
 
   subscription!: Subscription;
-  subscriptionAllPokemons!: Subscription;
+  subscriptionRawPokemons!: Subscription;
   pokemonList!: Array<Pokemon>;
   pokemonListCopy: Array<Pokemon> = [];
-  pokemonListSearch!: Array<Pokemon>;
+  pokemonRawList: Array<any> = [];
   pokemonInputName = new FormControl('');
+
+  scroll = true
 
   constructor(
     private pokemonApi: PokemonApiService,
@@ -39,22 +41,32 @@ export class PokedexComponent implements OnInit {
       this.pokemonList = data;
       this.pokemonListCopy = data
     });
-    // this.subscriptionAllPokemons = pokemonApi.allPokemonList$.subscribe(data => {
-    //   this.pokemonListSearch = data;
-    // });
+    this.subscriptionRawPokemons = pokemonApi.rawPokemonList$.subscribe(data => {
+      this.pokemonRawList = data;
+    });
   }
 
   ngOnInit() {
   }
 
   submitPokemonName(pokemonInputName: any) {
-    pokemonInputName = pokemonInputName.trim().split(' ').join('').toLowerCase()
-    this.pokemonList = this.pokemonListCopy.filter(x => x.name.toLocaleLowerCase().includes(pokemonInputName))
+    let listRetrieved: any[] = []
+    this.scroll = false;
+    pokemonInputName = pokemonInputName.trim().split(' ').join('').toLowerCase();
+    let list = this.pokemonRawList.filter(x => x.name.toLocaleLowerCase().includes(pokemonInputName));
+    console.log(list)
+    for (let i = 0; i < list.length; i++) {
+      const element = list[i];
+      this.pokemonApi.getSpecificPokemon(element.url).subscribe(data => listRetrieved.push(data));
+      console.log(element)
+    }
+    this.pokemonList = listRetrieved;
   }
 
   resetSearch() {
     this.pokemonInputName.reset();
     this.pokemonList = this.pokemonListCopy;
+    this.scroll = true
   }
 
   capitalizePokemonName(pokemonName: string) {
@@ -63,20 +75,20 @@ export class PokedexComponent implements OnInit {
 
 
   // VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
-  // @HostListener('scroll', ['$event']) onScroll(event: any) {
-  //   // console.log(event.target.offsetHeight, event.target.scrollTop, event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight);
-  //   if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-  //     console.log('bottom', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
-  //     this.pokemonApi.getElementInformation(20)
-  //     return
-  //   }
-  //   else {
-  //     if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 0.5) {
-  //       console.log('bottom 0.5', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
-  //       this.pokemonApi.getElementInformation(20)
-  //       return
-  //     }
-  //   }
-  // }
+  @HostListener('scroll', ['$event']) onScroll(event: any) {
+    // console.log(event.target.offsetHeight, event.target.scrollTop, event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight);
+    if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+      console.log('bottom', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
+      this.pokemonApi.getElementInformation(20)
+      return
+    }
+    else {
+      if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 0.5) {
+        console.log('bottom 0.5', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
+        this.pokemonApi.getElementInformation(20)
+        return
+      }
+    }
+  }
 
 }
