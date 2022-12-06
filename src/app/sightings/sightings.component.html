@@ -1,18 +1,38 @@
 <div class="container">
-    <select name="cars" id="cars" [(ngModel)]="pokemonSelected">
-        <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
-    </select>
-    {{pokemonSelected}}
+    <div class="avvistamento">
+        <div>Avvistamento!</div>
 
-    <input type="file" id="pokemonPic" name="pokemonPic" accept="image/*" (change)="fileChangeEvent()">
+        <select class="multiSelect" name="cars" id="cars" [(ngModel)]="pokemonSelected">
+            <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
+        </select>
+        {{pokemonSelected}}
 
-    <input type="text" name="note" id="note" [formControl]="note">
+        <input type="file" id="pokemonPic" name="pokemonPic" accept="image/*" (change)="fileChangeEvent($event)">
+        <label for="pokemonPic" class="imageSelect">
+            Custom Upload
+        </label>
 
-    <button (click)="submit()" [disabled]="checkAll()">Submit</button>
-
-    <div *ngFor="let pokemonList of pokemonList$ | async">
-        {{pokemonList | json}}
+        <input class="searchInput" type="text" name="note" id="note" [formControl]="note">
+        <!-- [disabled]="checkAll()" -->
+        <button class="submitButton" (click)="submit()">Submit</button>
+        <button class="resetButton" (click)="resetDatabase()">reset</button>
     </div>
 
-    <button (click)="resetDatabase()">reset</button>
+    <div class="pokemons">
+        <ng-container *ngFor="let pokemonList of pokemonList$ | async">
+            <div *ngFor="let appearance of pokemonList.appearance" class="pokemonContainer">
+                <div class="pokemonImageContainer">
+                    <img [src]="appearance.image" [alt]="pokemonList.name" class="pokemonImage">
+                </div>
+
+                <div class="pokemonGenericInfo">
+                    <div>{{pokemonList.id}}</div>
+                    <div>{{pokemonList.name}}</div>
+                    <div>{{appearance.note}}</div>
+                    <div>{{appearance.date}}</div>
+                    <div>{{appearance.place}}</div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </div>

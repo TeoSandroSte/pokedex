@@ -1,3 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    height: 100%;
+    width: 100%;
+    background-color: #eaeaea;
+}
+
 .searchContainer {
     display: flex;
     flex-direction: row;
@@ -22,31 +31,6 @@
     padding: 10px;
 }
 
-
-
-
-.pokemonGenericInfo {
-    margin: 40px 12px 12px 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.pokemonImageContainer {
-    width: 100%;
-    height: 124px;
-    border-radius: 10px 10px 1000px 1000px;
-    background-color: #F9C5BB;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.pokemonImage {
-    width: 75%;
-    height: intrinsic;
-    top: 0;
-}
 
 .pokemonId {
     font-size: medium;
@@ -210,7 +194,7 @@
 
     .pokemonImageContainer {
         width: 20%;
-        border-radius: 100px 10px 10px 100px;
+        border-radius: 1000px 10px 10px 1000px;
         background-color: #F9C5BB;
         display: flex;
         justify-content: center;
@@ -245,6 +229,29 @@
         flex-direction: column-reverse;
         border-radius: 10px;
     }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -267,6 +274,29 @@
         display: flex;
         flex-direction: column-reverse;
         border-radius: 10px;
+    }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
@@ -291,6 +321,29 @@
         flex-direction: column-reverse;
         border-radius: 10px;
     }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 
 @media (min-width: 1281px) and (max-width: 1440px) {
@@ -313,6 +366,29 @@
         display: flex;
         flex-direction: column-reverse;
         border-radius: 10px;
+    }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
@@ -337,6 +413,29 @@
         flex-direction: column-reverse;
         border-radius: 10px;
     }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 
 @media (min-width: 1601px) and (max-width: 1920px) {
@@ -359,6 +458,29 @@
         display: flex;
         flex-direction: column-reverse;
         border-radius: 10px;
+    }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
@@ -383,6 +505,29 @@
         flex-direction: column-reverse;
         border-radius: 10px;
     }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 
 @media (min-width: 2201px) {
@@ -405,5 +550,28 @@
         display: flex;
         flex-direction: column-reverse;
         border-radius: 10px;
+    }
+
+    .pokemonImageContainer {
+        width: 100%;
+        height: 124px;
+        border-radius: 10px 10px 1000px 1000px;
+        background-color: #F9C5BB;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .pokemonImage {
+        width: 75%;
+        height: intrinsic;
+        top: 0;
+    }
+
+    .pokemonGenericInfo {
+        margin: 40px 12px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }

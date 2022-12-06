@@ -1,5 +1,4 @@
-<div
-    style="display: flex; flex-direction: column; overflow-y: hidden; height: 100%; width: 100%; background-color: #eaeaea;">
+<div class="container">
     <div class="searchContainer">
         <button *ngIf="pokemonInputName.value !== '' && pokemonInputName.value !== null" class="searchButton"
             type="button" (click)="resetSearch()">
@@ -10,7 +9,8 @@
             placeholder="Search for a Pokemon..." (input)="submitPokemonName(pokemonInputName.value)">
     </div>
 
-
+    <!-- VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
+    (scroll)="onScroll($event)" -->
     <div class="pokemons">
         <ng-container *ngIf="pokemonList !== []">
             <div *ngFor="let pokemon of pokemonList" class="pokemonContainer">

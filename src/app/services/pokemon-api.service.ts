@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Pokemon } from './pokedex/pokedex.component';
-import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
+import { Pokemon } from '../pokedex/pokedex.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonApiService {
 
-  pokemonList$ = new BehaviorSubject<Array<string>>([]);
+  pokemonList$ = new BehaviorSubject<Array<Pokemon>>([]);
+  allPokemonList$ = new BehaviorSubject<Array<Pokemon>>([]);
+  pokemonList: Array<Pokemon> = [];
   initialUrl: string = 'https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0';
+  elements = 100000;
+  offset = 0;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getElementInformation(url: string) {
-    this.http.get<any>(url).pipe(
+  getElementInformation(increase: number) {
+    // VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
+    // this.offset = this.offset + increase;
+    // this.http.get<any>(`https://pokeapi.co/api/v2/pokemon?limit=${this.elements}&offset=${this.offset}`).pipe(
+    this.http.get<any>(this.initialUrl).pipe(
       map(i => i)
     )
       .subscribe(data => {
@@ -30,7 +37,7 @@ export class PokemonApiService {
   separateElementData(data: any) {
     if (data !== undefined) {
       if (data.results !== undefined && data.results !== null) {
-        this.pokemonList$.next([])
+        // this.pokemonList$.next([])
         this.findAndWaitForAllPokemons(data.results);
       }
     }
@@ -40,21 +47,14 @@ export class PokemonApiService {
   }
 
   findAndWaitForAllPokemons(results: any) {
-    const requests = [];
-
     for (let i = 0; i < results.length; i++) {
       const element = results[i];
-      requests.push(this.http.get<any>(element.url))
-    }
-
-    return forkJoin(requests)
-      .subscribe((response) => {
-        this.pokemonList$.next(response)
+      console.log(i)
+      this.http.get<any>(element.url).subscribe(data => {
+        this.pokemonList.push(data)
       })
-  }
-
-  getSinglePokemonInformation(url: string) {
-    return this.http.get<any>("https://pokeapi.co/api/v2/pokemon/" + url);
+    }
+    this.pokemonList$.next(this.pokemonList);
   }
 
 }

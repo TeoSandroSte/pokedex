@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { SightingsComponent } from './sightings/sightings.component';
 import { ContainerComponent } from './container/container.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ContainerComponent } from './container/container.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    ScrollingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

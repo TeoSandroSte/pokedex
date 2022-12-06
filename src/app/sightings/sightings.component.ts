@@ -5,7 +5,7 @@ import { liveQuery } from 'dexie';
 import { forkJoin, map, Subscription } from 'rxjs';
 import { db } from '../db';
 import { Pokemon } from '../pokedex/pokedex.component';
-import { PokemonApiService } from '../pokemon-api.service';
+import { PokemonApiService } from '../services/pokemon-api.service';
 
 @Component({
   selector: 'app-sightings',
@@ -36,44 +36,68 @@ export class SightingsComponent implements OnInit {
     this.getLocation();
   }
 
-  fileChangeEvent() {
-    this.http.get('https://avatars0.githubusercontent.com/u/5053266?s=460&v=4', { responseType: 'blob' })
-      .subscribe(blob => {
-        const reader = new FileReader();
-        const binaryString = reader.readAsDataURL(blob);
-        reader.onload = (event: any) => {
-          console.log('Image in Base64: ', event.target.result);
-          this.imgBase64 = event.target.result;
-        };
+  // fileChangeEvent(event: Event) {
+  // this.http.get('https://avatars0.githubusercontent.com/u/5053266?s=460&v=4', { responseType: 'blob' })
+  //   .subscribe(blob => {
+  // const reader = new FileReader();
+  // const binaryString = reader.readAsDataURL(blob);
+  // reader.onload = (event: any) => {
+  //   console.log('Image in Base64: ', event.target.result);
+  //   this.imgBase64 = event.target.result;
+  // };
 
-        reader.onerror = (event: any) => {
-          console.log("File could not be read: " + event.target.error.code);
-          return event.target.error.code
-        };
-      });
+  // reader.onerror = (event: any) => {
+  //   console.log("File could not be read: " + event.target.error.code);
+  //   return event.target.error.code
+  // };
+  // });
+  // }
+  base64textString: String = "";
+
+  fileChangeEvent(evt: any) {
+    if (evt.target !== null) {
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = this._handleReaderLoaded.bind(this);
+
+        reader.readAsBinaryString(file);
+      }
+    }
+    console.log('immagine: ', this.base64textString)
+  }
+
+  _handleReaderLoaded(readerEvt: any) {
+    var binaryString = readerEvt.target.result;
+    this.base64textString = btoa(binaryString);
+    console.log(btoa(binaryString));
   }
 
   async submit() {
-    console.log('values: ', this.note.value, this.imgBase64, this.lat, this.lng, this.getDate(), this.pokemonSelected.name, this.pokemonSelected.id)
+    // console.log('values: ', this.note.value, this.imgBase64, this.lat, this.lng, this.getDate(), this.pokemonSelected.name, this.pokemonSelected.id)
     if (this.pokemonSelected.name !== null && this.note.value !== null) {
 
       let existing = await db.pokemonLists
         .where({
           id: this.pokemonSelected.id
-        })
-        .modify(pokemon => {
-          if (this.note.value !== null && this.imgBase64 !== undefined) {
-            pokemon.appearance.push({
-              note: this.note.value,
-              date: this.getDate(),
-              place: this.lat + ' ' + this.lng,
-              image: this.imgBase64
-            })
-          }
-        })
+        }).toArray();
+      // .modify(pokemon => {
+      //   console.log('in modify')
+      //   if (this.note.value !== null && this.base64textString !== undefined) {
+      //     pokemon.appearance.push({
+      //       note: this.note.value,
+      //       date: this.getDate(),
+      //       place: this.lat + ' ' + this.lng,
+      //       image: 'data:image/png;base64, ' + this.base64textString,
+      //     })
+      //   }
+      // })
 
 
-      if (existing == 0) {
+      if (existing.length == 0) {
         db.pokemonLists.add({
           id: this.pokemonSelected.id,
           name: this.pokemonSelected.name,
@@ -81,9 +105,25 @@ export class SightingsComponent implements OnInit {
             note: this.note.value,
             date: this.getDate(),
             place: this.lat + ' ' + this.lng,
-            image: this.imgBase64
+            image: 'data:image/png;base64, ' + this.base64textString
           }]
         })
+      }
+      if (existing.length == 1) {
+        await db.pokemonLists
+          .where({
+            id: this.pokemonSelected.id
+          }).modify(pokemon => {
+            console.log('in modify')
+            if (this.note.value !== null && this.base64textString !== undefined) {
+              pokemon.appearance.push({
+                note: this.note.value,
+                date: this.getDate(),
+                place: this.lat + ' ' + this.lng,
+                image: 'data:image/png;base64, ' + this.base64textString,
+              })
+            }
+          })
       }
       console.log('existing', existing)
     }
@@ -109,21 +149,27 @@ export class SightingsComponent implements OnInit {
   }
 
   getLocation() {
+    console.log(navigator.geolocation)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position)
         if (position) {
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
         }
       },
-        (error) => console.log(error));
+        (error) => {
+          console.log(error);
+          this.lat = 35.728909;
+          this.lng = 139.719213;
+        });
     } else {
       alert("Geolocation is not supported by this browser.");
     }
   }
 
   checkAll() {
-    if (this.imgBase64 !== undefined && this.pokemonSelected.name !== '') {
+    if (this.base64textString !== undefined && this.pokemonSelected.name !== '') {
       return false
     }
     else {
