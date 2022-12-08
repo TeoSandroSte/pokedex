@@ -1,7 +1,7 @@
 import Dexie, { Table } from 'dexie';
 
 export interface Pokemons {
-    id: number,
+    id: any,
     name: string,
     appearance: Array<Appearance>,
 }
@@ -22,7 +22,7 @@ export class AppDB extends Dexie {
         this.version(1).stores({
             pokemonLists: 'id, name'
         });
-        this.on('populate', () => this.populate())
+        // this.on('populate', () => this.populate())
     }
 
     async populate() {
@@ -40,7 +40,7 @@ export class AppDB extends Dexie {
     async resetDatabase() {
         await db.transaction('rw', 'pokemonLists', () => {
             this.pokemonLists.clear();
-            this.populate();
+            // this.populate();
         });
     }
 }

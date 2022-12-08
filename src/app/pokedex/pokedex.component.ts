@@ -53,14 +53,22 @@ export class PokedexComponent implements OnInit {
     let listRetrieved: any[] = []
     this.scroll = false;
     pokemonInputName = pokemonInputName.trim().split(' ').join('').toLowerCase();
-    let list = this.pokemonRawList.filter(x => x.name.toLocaleLowerCase().includes(pokemonInputName));
-    console.log(list)
-    for (let i = 0; i < list.length; i++) {
-      const element = list[i];
-      this.pokemonApi.getSpecificPokemon(element.url).subscribe(data => listRetrieved.push(data));
-      console.log(element)
+    if (pokemonInputName.length >= 2) {
+      let list = this.pokemonRawList.filter(x => x.name.toLocaleLowerCase().includes(pokemonInputName));
+      console.log(list)
+      for (let i = 0; i < list.length; i++) {
+        const element = list[i];
+        this.pokemonApi.getSpecificPokemon(element.url).subscribe(data => listRetrieved.push(data));
+        console.log(element)
+      }
+      this.pokemonList = listRetrieved;
     }
-    this.pokemonList = listRetrieved;
+    if (pokemonInputName.length == 1) {
+      console.log('inserisci almeno due caratteri')
+    }
+    if (pokemonInputName.length == 0) {
+      this.resetSearch()
+    }
   }
 
   resetSearch() {
@@ -79,13 +87,13 @@ export class PokedexComponent implements OnInit {
     // console.log(event.target.offsetHeight, event.target.scrollTop, event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight);
     if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
       console.log('bottom', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
-      this.pokemonApi.getElementInformation(20)
+      this.pokemonApi.getElementInformation(40)
       return
     }
     else {
       if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 0.5) {
         console.log('bottom 0.5', event.target.offsetHeight + event.target.scrollTop, event.target.scrollHeight)
-        this.pokemonApi.getElementInformation(20)
+        this.pokemonApi.getElementInformation(40)
         return
       }
     }

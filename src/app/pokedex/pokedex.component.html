@@ -4,10 +4,10 @@
             type="button" (click)="resetSearch()">
             X
         </button>
-
         <input class="searchInput" id="pokemonInputName" type="text" [formControl]="pokemonInputName"
             placeholder="Search for a Pokemon..." (input)="submitPokemonName(pokemonInputName.value)">
     </div>
+    <div *ngIf="pokemonInputName.value?.length == 1" class="oneMore">Inserisci almeno due lettere</div>
 
     <!-- VERSIONE CON L'INFINITE SCROLL CHE CREA PROBLEMI CON IL SEARCH
      -->

@@ -1,13 +1,59 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     margin: auto;
+    background-color: #eaeaea;
 }
 
 .avvistamento {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: rgb(60, 60, 60);
+    margin-bottom: 24px;
+}
+
+.titleFont {
+    font-size: x-large;
+    font: rgb(46, 46, 46);
+    color: white;
+}
+
+.title {
+    width: 300px;
+    // height: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: transparent;
+    border: 0px;
+}
+
+.expand {
+    width: 20px;
+    height: auto;
+    margin-left: 16px;
+}
+
+.expandUpsidedown {
+    width: 20px;
+    height: auto;
+    margin-left: 16px;
+    transform: rotate(180deg);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
 }
 
 .multiSelect {
@@ -15,24 +61,69 @@
 }
 
 input[type="file"] {
-    display: none;
+    // display: none;
+    width: 300px;
 }
 
 .imageSelect {
     width: 300px;
     border: 1px solid #ccc;
+    border-radius: 10px;
     display: inline-block;
-    padding: 6px 12px;
+    padding: 10px;
     cursor: pointer;
+    background-color: white;
+    font-size: medium;
+}
+
+.image {
+    color: white;
 }
 
 .searchInput {
     width: 300px;
-    border: 1px solid #ccc;
-    outline: 0;
-    border-radius: 15px;
-    font-size: 15px;
-    padding: 10px;
+    // border: 1px solid #ccc;
+    // outline: 0;
+    // border-radius: 10px;
+    // font-size: medium;
+    // padding: 10px;
+}
+
+.buttons {
+    width: 300px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.cancelButton {
+    width: 60px;
+    background-color: transparent;
+    border: 0;
+    color: white;
+}
+
+.submitButton {
+    width: 60px;
+    background-color: white;
+    border: 0;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.data,
+.place,
+.note {
+    margin-bottom: 8px;
 }
 
 @media (max-width: 480px) {
@@ -63,10 +154,13 @@ input[type="file"] {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
+        // border-radius: 10px 1000px 1000px 10px;
+        // background-color: #F9C5BB;
     }
 
     .pokemonImageContainer {
-        width: 20%;
+        width: 50%;
         border-radius: 1000px 10px 10px 1000px;
         background-color: #F9C5BB;
         display: flex;
@@ -75,9 +169,10 @@ input[type="file"] {
     }
 
     .pokemonImage {
-        height: intrinsic;
-        margin-left: -54px;
-        width: 180%;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 }
 
@@ -105,22 +200,29 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        padding: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
+        // border-radius: 10px 1000px 1000px 10px;
+        // background-color: #F9C5BB;
     }
 }
 
@@ -148,22 +250,30 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        padding: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
+        // border-radius: 1000px 1000px 10px 10px;
+        // background-color: #F9C5BB;
+        // height: 100px;
     }
 }
 
@@ -191,22 +301,27 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }
 
@@ -234,22 +349,27 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }
 
@@ -277,22 +397,27 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }
 
@@ -316,26 +441,33 @@ input[type="file"] {
         display: flex;
         flex-direction: column;
         border-radius: 10px;
-    }
-
-    .pokemonImageContainer {
-        width: 100%;
-        height: 124px;
-        display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .pokemonImage {
+    .pokemonImageContainer {
         width: 100%;
-        height: intrinsic;
+        height: 160px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
+    }
+
+    .pokemonImage {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }
 
@@ -363,22 +495,27 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }
 
@@ -406,21 +543,26 @@ input[type="file"] {
 
     .pokemonImageContainer {
         width: 100%;
-        height: 124px;
+        height: 160px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F9C5BB;
+        border-radius: 10px 10px 1000px 1000px;
     }
 
     .pokemonImage {
-        width: 100%;
-        height: intrinsic;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     .pokemonGenericInfo {
-        margin: 40px 12px 12px 12px;
+        margin: 12px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        min-height: 203px;
     }
 }

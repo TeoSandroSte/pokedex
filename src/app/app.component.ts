@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.pokemonApi.getElementInformation(0);
     this.pokemonApi.getAllrawPokemon();
+    this.pokemonApi.getAllPokemons();
   }
 
 }

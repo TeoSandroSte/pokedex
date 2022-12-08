@@ -1,21 +1,29 @@
 <div class="container">
     <div class="avvistamento">
-        <div>Avvistamento!</div>
+        <button class="title" (click)="cambiaAvvistamento()">
+            <div class="titleFont">
+                Avvistamento!
+            </div>
+            <img src="../../assets/images/keyboard_arrow_up_FILL0_wght400_GRAD0_opsz48.svg" alt="expand"
+                [class]="avvistamento == true ? 'expand' : 'expandUpsidedown'">
+        </button>
 
-        <select class="multiSelect" name="cars" id="cars" [(ngModel)]="pokemonSelected">
-            <option *ngFor="let pokemon of pokemonList" [ngValue]="pokemon">{{pokemon.name}}</option>
-        </select>
-        {{pokemonSelected}}
+        <form *ngIf="avvistamento == true" class="options">
+            <select class="multiSelect" [(ngModel)]="pokemonSelected" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let pokemon of allPokemons" [ngValue]="pokemon">{{pokemon.name}}</option>
+            </select>
 
-        <input type="file" id="pokemonPic" name="pokemonPic" accept="image/*" (change)="fileChangeEvent($event)">
-        <label for="pokemonPic" class="imageSelect">
-            Custom Upload
-        </label>
+            <input class="image" type="file" id="pokemonPic" name="pokemonPic" accept="image/*"
+                (change)="fileChangeEvent($event)">
 
-        <input class="searchInput" type="text" name="note" id="note" [formControl]="note">
-        <!-- [disabled]="checkAll()" -->
-        <button class="submitButton" (click)="submit()">Submit</button>
-        <button class="resetButton" (click)="resetDatabase()">reset</button>
+            <input class="searchInput" type="text" name="note" id="note" [formControl]="note">
+
+            <div class="buttons">
+                <input value="Annulla" class="cancelButton" type="reset" (click)="cancel()">
+                <!-- <button class=" cancelButton" (click)="resetDatabase()">Reset</button> -->
+                <button class="submitButton" [disabled]="checkAll()" (click)="submit()">Segnala</button>
+            </div>
+        </form>
     </div>
 
     <div class="pokemons">
@@ -26,11 +34,14 @@
                 </div>
 
                 <div class="pokemonGenericInfo">
-                    <div>{{pokemonList.id}}</div>
-                    <div>{{pokemonList.name}}</div>
-                    <div>{{appearance.note}}</div>
-                    <div>{{appearance.date}}</div>
-                    <div>{{appearance.place}}</div>
+                    <div class="id">#{{pokemonList.id}}</div>
+                    <div class="name">{{capitalizePokemonName(pokemonList.name)}}</div>
+                    <div>Data:</div>
+                    <div class="data">{{appearance.date}}</div>
+                    <div>Coordinate:</div>
+                    <div class="place">{{appearance.place}}</div>
+                    <div>Note:</div>
+                    <div class="note">{{appearance.note}}</div>
                 </div>
             </div>
         </ng-container>

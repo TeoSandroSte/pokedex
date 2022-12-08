@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
+    // align-items: center;
     height: 100%;
     width: 100%;
     background-color: #eaeaea;
@@ -12,7 +13,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 16px 0;
+    padding: 16px 0 24px 0;
 }
 
 .searchButton {
@@ -26,11 +27,18 @@
     width: 50%;
     border: 1px solid #ccc;
     outline: 0;
-    border-radius: 15px;
+    border-radius: 10px;
     font-size: 15px;
     padding: 10px;
 }
 
+.oneMore {
+    margin: auto;
+    width: 50%;
+    margin-top: -24px;
+    margin-bottom: 24px;
+    font-size: small;
+}
 
 .pokemonId {
     font-size: medium;
