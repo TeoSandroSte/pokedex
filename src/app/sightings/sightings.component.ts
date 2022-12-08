@@ -35,7 +35,6 @@ export class SightingsComponent implements OnInit {
 
   ngOnInit() {
     this.getLocation();
-    this.pokemonApi.getAllPokemons();
   }
 
   getLocation() {
